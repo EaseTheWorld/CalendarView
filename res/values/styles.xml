@@ -1,0 +1,24 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light">
+        <item name="calendarViewStyle">@style/CalendarView</item>
+    </style>
+    
+    <style name="CalendarView">
+        <item name="showWeekNumber">false</item>
+        <item name="minDate">01/01/1900</item>
+        <item name="maxDate">12/31/2100</item>
+        <item name="shownWeekCount">6</item>
+        <item name="selectedMonthDateColor">#80ccccff</item>
+        <item name="dateColor">#ff000000</item>
+        <item name="dateSaturdayColor">#ff0000ff</item>
+        <item name="dateSundayColor">#ffff0000</item>
+        <item name="monthColor">#40000000</item>
+        <item name="yearColor">#8080ff80</item>
+        <item name="weekNumberColor">#888</item>
+        <item name="weekSeparatorLineColor">#ccf</item>
+        <item name="weekDayTextAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="dateTextSize">16sp</item>
+    </style>
+    
+</resources>

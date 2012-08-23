@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <com.easetheworld.calendarviewtest.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="360dip"
+        />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <Button android:id="@+id/btnDateDec"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="-1 D" />
+	    <Button android:id="@+id/btnDateInc"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="+1 D" />
+	    <Button android:id="@+id/btnWeekDec"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="-1 W" />
+	    <Button android:id="@+id/btnWeekInc"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="+1 W" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <Button android:id="@+id/btnMonthDec"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="-1 M" />
+	    <Button android:id="@+id/btnMonthInc"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="+1 M" />
+	    <Button android:id="@+id/btnYearDec"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="-1 Y" />
+	    <Button android:id="@+id/btnYearInc"
+	        android:layout_width="0dip"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:onClick="clickHandler"
+	        android:text="+1 Y" />
+    </LinearLayout>
+    
+    <!-- 
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="300dip"
+        />
+     -->
+
+</LinearLayout>

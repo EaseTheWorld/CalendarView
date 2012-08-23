@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2006 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Formatting note: terminate all comments with a period, to avoid breaking
+     the documentation output. To suppress comment lines from the documentation
+     output, insert an eat-comment element after the comment lines.
+-->
+
+<resources>
+
+    <declare-styleable name="CalendarView">
+        <!-- The first day of week according to {@link java.util.Calendar}. -->
+        <attr name="firstDayOfWeek" format="integer" />
+        <!-- Whether do show week numbers. -->
+        <attr name="showWeekNumber" format="boolean" />
+        <!-- The minimal date shown by this calendar view in mm/dd/yyyy format. -->
+        <attr name="minDate" format="string" />
+        <!-- The minimal date shown by this calendar view in mm/dd/yyyy format. -->
+        <attr name="maxDate" format="string" />
+        <!-- The number of weeks to be shown. -->
+        <attr name="shownWeekCount" format="integer"/>
+        <attr name="selectedMonthDateColor" format="color|reference" />
+        <!-- The color for the dates. -->
+        <attr name="dateColor" format="color|reference" />
+        <attr name="dateSaturdayColor" format="color|reference" />
+        <attr name="dateSundayColor" format="color|reference" />
+        <!-- The color for the month. -->
+        <attr name="monthColor" format="color|reference" />
+        <!-- The color for the year. -->
+        <attr name="yearColor" format="color|reference" />
+        <!-- The color for the week numbers. -->
+        <attr name="weekNumberColor" format="color|reference" />
+        <!-- The color for the sepatator line between weeks. -->
+        <attr name="weekSeparatorLineColor" format="color|reference" />
+        <!-- The text appearance for the week day abbreviation of the calendar header. -->
+        <attr name="weekDayTextAppearance" format="reference" />
+        <!-- The text appearance for the calendar dates. -->
+        <attr name="dateTextAppearance" format="reference" />
+        <!-- The text size for the calendar dates. -->
+        <attr name="dateTextSize" format="dimension" />
+    </declare-styleable>
+    
+    <declare-styleable name="CustomTheme">
+       <!-- The CalendarView style. -->
+        <attr name="calendarViewStyle" format="reference" /> 
+    </declare-styleable>
+    
+</resources>
