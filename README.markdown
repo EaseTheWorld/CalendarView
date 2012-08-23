@@ -3,6 +3,7 @@ Android CalendarView
 
 Android supports CalendarView since API 11.
 So I backport it and changed ui and method for my taste.
+![screenshot0](https://raw.github.com/EaseTheWorld/CalendarView/master/screenshot_calendarview.png)
 
 Differences
 -----------
