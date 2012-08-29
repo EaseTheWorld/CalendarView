@@ -35,7 +35,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
-import android.graphics.Rect;
 import android.os.Build;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -1065,12 +1064,8 @@ public class CalendarView extends FrameLayout {
      * </p>
      */
     private class WeekView extends View {
-    	
-    	private final Rect mTempRect = new Rect();
 
         private final Paint mDrawPaint = new Paint();
-        
-        private final Paint mSelectedDateDrawPaint = new Paint();
 
         // Cache the number strings so we don't have to recompute them each time
         private String[] mDayNumbers;
@@ -1090,6 +1085,7 @@ public class CalendarView extends FrameLayout {
         private int mMaxWeekOfFirstWeekDay = -1;
         private int mWeekOfLastWeekDay = -1;
         private int mMaxWeekOfLastWeekDay = -1;
+        private int mDateOfLastWeekDay = -1; 
 
         // The position of this week, equivalent to weeks since the week of Jan
         // 1st, 1900
@@ -1160,7 +1156,7 @@ public class CalendarView extends FrameLayout {
             mTempDate.add(Calendar.DAY_OF_MONTH, diff);
 
             mFirstDay = (Calendar) mTempDate.clone();
-            mMonthOfFirstWeekDay = mTempDate.get(Calendar.MONTH);
+            mMonthOfFirstWeekDay = mTempDate.get(Calendar.MONTH) + 1;
             
 	        // easetheworld : draw year, month background
             mYearOfFirstWeekDay = mTempDate.get(Calendar.YEAR);
@@ -1177,6 +1173,7 @@ public class CalendarView extends FrameLayout {
 		        // easetheworld : draw year, month background
                 if (i == mNumCells - 1) {
 		            mWeekOfLastWeekDay = mTempDate.get(Calendar.WEEK_OF_MONTH);
+		            mDateOfLastWeekDay = mTempDate.get(Calendar.DATE);
 		            mMaxWeekOfLastWeekDay = mTempDate.getActualMaximum(Calendar.WEEK_OF_MONTH);
                 }
                 mTempDate.add(Calendar.DAY_OF_MONTH, 1);
@@ -1186,7 +1183,7 @@ public class CalendarView extends FrameLayout {
             if (mTempDate.get(Calendar.DAY_OF_MONTH) == 1) {
                 mTempDate.add(Calendar.DAY_OF_MONTH, -1);
             }
-            mMonthOfLastWeekDay = mTempDate.get(Calendar.MONTH);
+            mMonthOfLastWeekDay = mTempDate.get(Calendar.MONTH) + 1;
 
             updateSelectionPositions();
         }
@@ -1199,10 +1196,6 @@ public class CalendarView extends FrameLayout {
             mDrawPaint.setAntiAlias(true);
             mDrawPaint.setStyle(Style.FILL);
             mDrawPaint.setTextAlign(Align.CENTER);
-            
-            mSelectedDateDrawPaint.setAntiAlias(true);
-            mSelectedDateDrawPaint.setColor(mSelectedMonthDateColor);
-            mSelectedDateDrawPaint.setStyle(Style.FILL);
         }
 
         public int getYearOfFirstWeekDay() {
@@ -1232,10 +1225,33 @@ public class CalendarView extends FrameLayout {
 
         @Override
         protected void onDraw(Canvas canvas) {
-        	drawMonth(canvas);
+        	drawMonthBackground(canvas); // different background color for even month and odd month
+        	drawMonth(canvas); // month number in background
         	drawSelectedDateBackground(canvas);
         	drawWeekNumbersAndDates(canvas);
         	drawWeekSeparators(canvas);
+        }
+        
+        private int mOddMonthColor = 0x80ffeeee;
+        private int mEvenMonthColor = 0x80eeeeff;
+        
+        private void drawMonthBackground(Canvas canvas) {
+        	int left = (mShowWeekNumber ? mWidth / mNumCells : 0);
+    		int monthOfLastWeekDayStart;
+    		if (mDateOfLastWeekDay < DAYS_PER_WEEK) {
+	        	// month of first weekday
+    			monthOfLastWeekDayStart = left + (DAYS_PER_WEEK - mDateOfLastWeekDay) * mWidth / mNumCells;
+				mDrawPaint.setColor((mMonthOfFirstWeekDay & 1) == 1 ? mOddMonthColor : mEvenMonthColor);
+	    		canvas.drawRect(left, mWeekSeperatorLineWidth, monthOfLastWeekDayStart, mHeight, mDrawPaint);
+	    		// month separator
+//	            mDrawPaint.setColor(mWeekSeparatorLineColor);
+//	            mDrawPaint.setStrokeWidth(mWeekSeperatorLineWidth);
+//	        	canvas.drawLine(monthOfLastWeekDayStart, mWeekSeperatorLineWidth, monthOfLastWeekDayStart, mHeight, mDrawPaint);
+    		} else
+	    		monthOfLastWeekDayStart = left;
+        	// month of last weekday
+			mDrawPaint.setColor((mMonthOfLastWeekDay & 1) == 1 ? mOddMonthColor : mEvenMonthColor);
+    		canvas.drawRect(monthOfLastWeekDayStart, mWeekSeperatorLineWidth, mWidth, mHeight, mDrawPaint);
         }
         
         // easetheworld : draw year, month background
@@ -1243,13 +1259,13 @@ public class CalendarView extends FrameLayout {
         
         private void drawMonth(Canvas canvas) {
         	// month of first day
-        	drawMultirowBackgroundText(canvas, Integer.toString(mMonthOfFirstWeekDay+1), mMonthPaint, mMaxWeekOfFirstWeekDay, YEAR_MONTH_BACKGROUND_SPAN_ROW, mWeekOfFirstWeekDay-1, getWidth() / 2);
+        	drawMultirowBackgroundText(canvas, Integer.toString(mMonthOfFirstWeekDay), mMonthPaint, mMaxWeekOfFirstWeekDay, YEAR_MONTH_BACKGROUND_SPAN_ROW, mWeekOfFirstWeekDay-1, getWidth() / 2);
         	
         	if (mMonthOfLastWeekDay == mMonthOfFirstWeekDay)
         		return;
         	
         	// month of last day
-        	drawMultirowBackgroundText(canvas, Integer.toString(mMonthOfLastWeekDay+1), mMonthPaint, mMaxWeekOfLastWeekDay, YEAR_MONTH_BACKGROUND_SPAN_ROW, mWeekOfLastWeekDay-1, getWidth() / 2);
+        	drawMultirowBackgroundText(canvas, Integer.toString(mMonthOfLastWeekDay), mMonthPaint, mMaxWeekOfLastWeekDay, YEAR_MONTH_BACKGROUND_SPAN_ROW, mWeekOfLastWeekDay-1, getWidth() / 2);
         }
 		
         /**
@@ -1326,8 +1342,8 @@ public class CalendarView extends FrameLayout {
             if (!mHasSelectedDay) {
                 return;
             }
-            mTempRect.set(mSelectedLeft, mWeekSeperatorLineWidth, mSelectedRight, mHeight);
-            canvas.drawRect(mTempRect, mSelectedDateDrawPaint);
+            mDrawPaint.setColor(mSelectedMonthDateColor);
+            canvas.drawRect(mSelectedLeft, mWeekSeperatorLineWidth, mSelectedRight, mHeight, mDrawPaint);
         }
 
         @Override

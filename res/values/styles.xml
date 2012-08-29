@@ -14,7 +14,7 @@
         <item name="dateSaturdayColor">#ff0000ff</item>
         <item name="dateSundayColor">#ffff0000</item>
         <item name="monthColor">#40000000</item>
-        <item name="yearColor">#8080ff80</item>
+        <item name="yearColor">#ff80ff80</item>
         <item name="weekNumberColor">#888</item>
         <item name="weekSeparatorLineColor">#ccf</item>
         <item name="weekDayTextAppearance">?android:attr/textAppearanceMedium</item>
